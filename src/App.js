@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from './Form';
 import { nanoid } from 'nanoid';
 import Item from './Item';
@@ -8,7 +8,16 @@ import './style.css';
 
 
 const App = () => {
-  const [items, setItems] = useState([]);
+  const getls=()=>{
+    const user=(localStorage.getItem("aahira"));
+  
+    if(user){
+      return JSON.parse(localStorage.getItem("aahira"))
+    }else{
+      return []
+    }
+  }
+  const [items, setItems] = useState(getls());
 
   const addItem = (itemName) => {
     const newItem = {
@@ -41,6 +50,10 @@ const App = () => {
     setItems(newItems);
     
   };
+  useEffect(()=>{
+    localStorage.setItem("aahira",JSON.stringify(items))
+  },[items]);
+  
   return (
     <section className='section-center'>
       
