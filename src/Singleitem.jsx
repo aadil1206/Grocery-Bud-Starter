@@ -19,7 +19,7 @@ const Singleitem = ({ item, removeItem, editItem }) => {
         <button
           className='btn remove-btn'
           type='button'
-          onClick={() => removeItem("hello")}
+          onClick={() => removeItem(item.id)}
         >
           delete
         </button>
