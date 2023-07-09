@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Form from './Form';
 import { nanoid } from 'nanoid';
 import Item from './Item';
@@ -8,6 +8,7 @@ import './style.css';
 
 
 const App = () => {
+  const focus=useRef(null)
   const getls=()=>{
     const user=(localStorage.getItem("aahira"));
   
@@ -19,15 +20,15 @@ const App = () => {
   }
   const [items, setItems] = useState(getls());
 
-  const addItem = (itemName) => {
+  const addItem = (new1) => {
     const newItem = {
-      name: itemName,
+      name: new1,
       completed: false,
       id: nanoid(),
     };
     const newItems = [...items, newItem];
     setItems(newItems);
-    console.log(itemName)
+    // console.log(itemName)
    
   };
 
@@ -53,11 +54,13 @@ const App = () => {
   useEffect(()=>{
     localStorage.setItem("aahira",JSON.stringify(items))
   },[items]);
-  
+  useEffect(()=>{
+    focus.current.focus();
+  })
   return (
     <section className='section-center'>
       
-      <Form addItem={addItem} />
+      <Form addItem={addItem} focus={focus} />
       <Item items={items} removeItem={removeItem} editItem={editItem} />
     </section>
   );
